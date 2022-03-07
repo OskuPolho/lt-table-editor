@@ -115,7 +115,9 @@ const TextCell = (props: CellProps) => {
       onBlur={() => {
         setHighlightedCol(null)
       }}
-      onChange={(e) => changeCellValue(rows, rowIndex, cellIndex, e.target.value, 'text')}
+      onChange={(e) => {
+        changeCellValue(rows, rowIndex, cellIndex, e.target.value, 'text')
+      }}
     />
     </div>
   )
@@ -252,14 +254,13 @@ interface TableProps {
   columns: any[]
 } 
 
-const Table = (props: TableProps) => {
-  const {rows, columns} = props
-  const {addRow} = useContext(TableContext)
+const Table = () => {
+  const {addRow, rows, columns} = useContext(TableContext)
   return (
       <Flex>
         <Flex flexDirection='column' flexGrow={6}>
           <Row cells={columns} />
-          {rows.map((row, index) => <Row key={`key-row_${index}`} cells={row} rowIndex={index}></Row>)}
+          {rows.map((row: rowProps[], index: number) => <Row key={`key-row_${index}`} cells={row} rowIndex={index}></Row>)}
           <div style={{marginTop: '5px', width: '100%'}}>
             <IconButton
               icon={<icons.PlusCircleIcon/>}
@@ -413,8 +414,8 @@ const Field = (props: FieldProps) => {
   }
   const addRow = (rowIndex: number) => {
     const newRows = [...rows]
-    const newRow = [...rows[rows.length-1]]
-    newRows.push(newRow);
+    const filledNewRow = rows[rows.length - 1].map((cell: any) => {return {...cell}})
+    newRows.push(filledNewRow);
     setRows(newRows)
   }
   const addNewColumn = () => {
@@ -428,17 +429,33 @@ const Field = (props: FieldProps) => {
     setColumns(newColumns);
     setRows(newRows)
   }
-  const [rows, setRows] = useState<any>([])
-  const [columns, setColumns] = useState<any>([])
-  const [table, setTable] = useState({});
+  const initRows = [
+    [
+      {type: 'text', text: 'sample text'},
+      {type: 'text', text: 'sample text'}
+    ],
+    [
+      {type: 'text', text: 'sample text'},
+      {type: 'text', text: 'sample text'}
+    ]
+  ]
+  const initColumns = [
+      {type: 'text', value: 'sample heading'},
+      {type: 'text', value: 'sample heading'} 
+  ]
+  const [rows, setRows] = useState<any>(initRows)
+  const [columns, setColumns] = useState<any>(initColumns)
+  const [isToBeMerged, setIsToBeMerged] = useState<any>(false)
   const [highlightedCol, setHighlightedCol] = useState<number>(-1)
   
 
   useEffect(() => {
-    const {rows, columns} = props.sdk.field.getValue();
-    setRows(rows);
-    setColumns(columns);
-    setTable({rows,columns})
+    const fieldValue = props.sdk.field.getValue();
+    if (fieldValue) {
+      setRows(fieldValue.rows);
+      setColumns(fieldValue.columns);
+      setIsToBeMerged(fieldValue.isToBeMerged);
+    }
   }, [])
 
   useEffect(() => {
@@ -448,12 +465,19 @@ const Field = (props: FieldProps) => {
       columns
     }
     props.sdk.field.setValue(newTable)
-    setTable(newTable)
   }, [rows, columns])
 
   return <TableContext.Provider value={{rows, columns, changeCellValue, changeColValue, addNewColumn, deleteColumn, deleteRow, addRow, highlightedCol, setHighlightedCol}}>
       <Flex flexDirection='column'>
-        <Table rows={rows} columns={columns}/>
+        <Table/>
+        <Switch
+          name="allow-cookies-controlled"
+          id="allow-cookies-controlled"
+          isChecked={isToBeMerged}
+          onChange={(e) => setIsToBeMerged(!isToBeMerged)}
+        >
+          Merge cells with same value
+        </Switch>
       </Flex>
     </TableContext.Provider>
 };
