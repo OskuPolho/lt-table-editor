@@ -14,15 +14,17 @@ export interface RowProps {
 export interface CellProps {
     cellIndex: number,
     rowIndex: number | undefined,
-    content: {
-        text: string,
-        type: string,
-        heading?: string,
-        value?: string,
-        width?: string,
-        fontSize?: string,
-        fontWeight?: string,
-        selectedColumn?: boolean,
-        textAlign: string
-    }
+    content: CellContent
+}
+
+export interface CellContent {
+    type: string,
+    text?: string,
+    heading?: string,
+    value?: string,
+    width?: string,
+    fontSize?: string,
+    fontWeight?: string,
+    selectedColumn?: boolean,
+    textAlign?: string
 }

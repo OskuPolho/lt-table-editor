@@ -27,9 +27,15 @@ const Field = (props: FieldProps) => {
   useEffect(() => {
     const fieldValue = props.sdk.field.getValue();
     if (fieldValue) {
-      setRows(fieldValue.rows);
-      setColumns(fieldValue.columns);
-      setIsToBeMerged(fieldValue.isToBeMerged);
+      if (fieldValue.rows) {
+        setRows(fieldValue.rows);
+      }
+      if (fieldValue.columns) {
+        setColumns(fieldValue.columns);
+      }
+      if (fieldValue.isToBeMerged) {
+        setIsToBeMerged(fieldValue.isToBeMerged);
+      }
     }
   }, [])
 
