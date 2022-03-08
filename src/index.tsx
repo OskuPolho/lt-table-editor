@@ -54,28 +54,8 @@ if (process.env.NODE_ENV === 'development' && window.self === window.top) {
     // Dont forget to delete the file too :)
     const ComponentLocationSettings = [
       {
-        location: locations.LOCATION_APP_CONFIG,
-        component: <ConfigScreen cma={cma} sdk={sdk as AppExtensionSDK} />,
-      },
-      {
         location: locations.LOCATION_ENTRY_FIELD,
         component: <Field cma={cma} sdk={sdk as FieldExtensionSDK} />,
-      },
-      {
-        location: locations.LOCATION_ENTRY_EDITOR,
-        component: <EntryEditor cma={cma} sdk={sdk as EditorExtensionSDK} />,
-      },
-      {
-        location: locations.LOCATION_DIALOG,
-        component: <Dialog cma={cma} sdk={sdk as DialogExtensionSDK} fieldSdk={sdk as FieldExtensionSDK}/>,
-      },
-      {
-        location: locations.LOCATION_ENTRY_SIDEBAR,
-        component: <Sidebar cma={cma} sdk={sdk as SidebarExtensionSDK} />,
-      },
-      {
-        location: locations.LOCATION_PAGE,
-        component: <Page cma={cma} sdk={sdk as PageExtensionSDK} />,
       },
     ];
 
