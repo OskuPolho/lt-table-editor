@@ -162,9 +162,11 @@ const ColHeader = (props: CellProps) => {
   return (
     <Flex style={{flexGrow: 1}} flexDirection='column'>
       <IconButton icon={<icons.DeleteIcon/>} onClick={() => {
-          const {newRows, newColumns} = deleteColumn(rows, columns, cellIndex);
-          setColumns(newColumns);
-          setRows(newRows);
+            if (columns.length > 2) {
+              const {newRows, newColumns} = deleteColumn(rows, columns, cellIndex);
+              setColumns(newColumns);
+              setRows(newRows);
+            }
           }}
           aria-label={'minus'}
       />

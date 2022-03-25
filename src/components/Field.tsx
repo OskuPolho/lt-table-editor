@@ -28,25 +28,42 @@ const Field = (props: FieldProps) => {
     const fieldValue = props.sdk.field.getValue();
     if (fieldValue) {
       if (fieldValue.rows) {
-        setRows(fieldValue.rows);
+        if (fieldValue.rows.length > 1) {
+          setRows(fieldValue.rows);
+        } else {
+          setRows(initRows);
+        }
       }
       if (fieldValue.columns) {
-        setColumns(fieldValue.columns);
+        if (fieldValue.columns.length > 1) {
+          setColumns(fieldValue.columns);
+        } else {
+          setColumns(initColumns)
+        }
       }
       if (fieldValue.isToBeMerged) {
-        setIsToBeMerged(fieldValue.isToBeMerged);
+        setIsToBeMerged(fieldValue.isToBeMerged.toString());
       }
+    } else {
+      setRows(initRows);
+      setColumns(initColumns);
+      setIsToBeMerged(true)
     }
   }, [])
 
   useEffect(() => {
+    if (columns.length < 1 || rows.length < 1) {
+      setRows(initRows);
+      setColumns(initColumns);
+    }
     props.sdk.window.startAutoResizer()
     const newTable = {
       rows,
       columns,
-      isToBeMerged
+      isToBeMerged: isToBeMerged.toString()
     }
     props.sdk.field.setValue(newTable)
+      .then(res => console.log({res}))
   }, [rows, columns, isToBeMerged])
 
   return (

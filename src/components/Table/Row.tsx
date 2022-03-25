@@ -20,8 +20,10 @@ const Row = (props: RowProps) => {
       icon={isRow ? <icons.DeleteIcon/> : <icons.PlusCircleIcon/>}
       onClick={isRow ? 
         () => {
-            const newRows = deleteRow(rows, rowIndex);
-            setRows(newRows)
+            if (rows.length > 1) {
+              const newRows = deleteRow(rows, rowIndex);
+              setRows(newRows)
+            } 
         } : 
         () => {
             const {newRows, newColumns} = addNewColumn(rows, columns);
