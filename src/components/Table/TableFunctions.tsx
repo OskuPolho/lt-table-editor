@@ -1,9 +1,10 @@
 
   import {CellContent} from './TableTypes'
 
-  export const changeColValue = (columns: any[], cellIndex: number, value: string, key: string) => {
+  export const changeColValue = (columns: any[], cellIndex: number, value: any, key: string) => {
+    const correctValue = typeof value === 'boolean' ? value.toString() : value;
     const newColumns = [...columns];
-    newColumns[cellIndex][key] = value
+    newColumns[cellIndex][key] = correctValue
     return (newColumns)
   }
 

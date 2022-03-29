@@ -143,14 +143,15 @@ const TextAlignSelector = (props:CellProps) => {
 const IsSelectedColumn = (props: CellProps) => {
   const {columns, changeColValue, setColumns} = useContext(TableContext);
   const {cellIndex, content} = props;
+  const selectedColumn = content.selectedColumn ? JSON.parse(content.selectedColumn) : false;
   return (
     <FormControl>
       <Switch
         name="allow-cookies-controlled"
         id="allow-cookies-controlled"
-        isChecked={content.selectedColumn}
+        isChecked={selectedColumn}
         onChange={(e) => {
-          const newCols = changeColValue(columns, cellIndex, !content.selectedColumn, 'selectedColumn');
+          const newCols = changeColValue(columns, cellIndex, !selectedColumn, 'selectedColumn');
           setColumns(newCols);
         }}
       >

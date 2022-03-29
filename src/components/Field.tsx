@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {
   Flex,
+  FormControl,
+  Select,
   Switch,
 } from '@contentful/f36-components';
 
@@ -18,36 +20,68 @@ import {
 export const TableContext = React.createContext<any>({});
 
 const Field = (props: FieldProps) => {
+
+  const initRows = [
+    [
+      {type: 'text', text: 'sample text'},
+      {type: 'text', text: 'sample text'}
+    ],
+    [
+      {type: 'text', text: 'sample text'},
+      {type: 'text', text: 'sample text'}
+    ]
+  ]
+  const initColumns = [
+      {
+        type: 'text',
+        value: 'sample heading',
+        selectedColumn: 'false'
+      },
+      {
+        type: 'text',
+        value: 'sample heading',
+        selectedColumn: 'false'
+      } 
+  ]
+
+  const initCollapsibleHeadingSize = props.sdk.entry.getSys().environment.sys.id === 'dev' ? 'large' : 'medium'
+
   const [rows, setRows] = useState<any>(initRows)
   const [columns, setColumns] = useState<any>(initColumns)
   const [isToBeMerged, setIsToBeMerged] = useState<any>(false)
+  const [collapsibleHeadingSize, setCollapsibleHeadingSize] = useState<string>(initCollapsibleHeadingSize)
   const [highlightedCol, setHighlightedCol] = useState<number>(-1)
   
 
+
   useEffect(() => {
     const fieldValue = props.sdk.field.getValue();
-    if (fieldValue) {
-      if (fieldValue.rows) {
-        if (fieldValue.rows.length > 1) {
-          setRows(fieldValue.rows);
-        } else {
-          setRows(initRows);
-        }
+    if (fieldValue?.rows) {
+      if (fieldValue.rows.length > 1) {
+        setRows(fieldValue.rows);
+      } else {
+        setRows(initRows);
       }
-      if (fieldValue.columns) {
-        if (fieldValue.columns.length > 1) {
-          setColumns(fieldValue.columns);
-        } else {
-          setColumns(initColumns)
-        }
+    }
+    if (fieldValue?.columns) {
+      if (fieldValue.columns.length > 1) {
+        fieldValue.columns.forEach((column: any) => {
+          column.selectedColumn = column.selectedColumn ? column.selectedColumn.toString() : "false"
+        })
+        setColumns(fieldValue.columns);
+      } else {
+        setColumns(initColumns)
       }
-      if (fieldValue.isToBeMerged) {
-        setIsToBeMerged(fieldValue.isToBeMerged.toString());
-      }
+    }
+    if (fieldValue?.isToBeMerged) {
+      setIsToBeMerged(fieldValue.isToBeMerged.toString());
     } else {
-      setRows(initRows);
-      setColumns(initColumns);
-      setIsToBeMerged(true)
+      setIsToBeMerged("true")
+    }
+    if (fieldValue?.collapsibleHeadingSize) {
+      setCollapsibleHeadingSize(fieldValue.collapsibleHeadingSize);
+    } else {
+      setCollapsibleHeadingSize(initCollapsibleHeadingSize)
     }
   }, [])
 
@@ -60,11 +94,12 @@ const Field = (props: FieldProps) => {
     const newTable = {
       rows,
       columns,
-      isToBeMerged: isToBeMerged.toString()
+      isToBeMerged: isToBeMerged.toString(),
+      collapsibleHeadingSize
     }
     props.sdk.field.setValue(newTable)
       .then(res => console.log({res}))
-  }, [rows, columns, isToBeMerged])
+  }, [rows, columns, isToBeMerged, collapsibleHeadingSize])
 
   return (
     <TableContext.Provider
@@ -87,11 +122,30 @@ const Field = (props: FieldProps) => {
         <Switch
           name="allow-cookies-controlled"
           id="allow-cookies-controlled"
-          isChecked={isToBeMerged}
-          onChange={(e) => setIsToBeMerged(!isToBeMerged)}
+          isChecked={JSON.parse(isToBeMerged)}
+          onChange={(e) => {
+            const value = !JSON.parse(isToBeMerged);
+            setIsToBeMerged(value.toString())
+          }}
         >
           Merge cells with same value
         </Switch>
+        <FormControl style={{marginTop: '30px'}}>
+          <FormControl.Label>Collapsible Heading Size</FormControl.Label>
+          <Select
+            value={collapsibleHeadingSize}
+            onChange={(e) => setCollapsibleHeadingSize(e.target.value)}
+          >
+            <Select.Option value="x-small">x-small</Select.Option>
+            <Select.Option value="small">small</Select.Option>
+            <Select.Option value="medium">medium</Select.Option>
+            <Select.Option value="large">large</Select.Option>
+            <Select.Option value="x-large">x-large</Select.Option>
+            <Select.Option value="xx-large">xx-large</Select.Option>
+            <Select.Option value="xxx-large">xxx-large</Select.Option>
+            <Select.Option value="xxxx-large">xxxx-large</Select.Option>
+          </Select>
+        </FormControl>
       </Flex>
     </TableContext.Provider>
   )
@@ -99,17 +153,3 @@ const Field = (props: FieldProps) => {
 
 export default Field;
 
-const initRows = [
-  [
-    {type: 'text', text: 'sample text'},
-    {type: 'text', text: 'sample text'}
-  ],
-  [
-    {type: 'text', text: 'sample text'},
-    {type: 'text', text: 'sample text'}
-  ]
-]
-const initColumns = [
-    {type: 'text', value: 'sample heading'},
-    {type: 'text', value: 'sample heading'} 
-]

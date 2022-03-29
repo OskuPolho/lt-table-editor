@@ -25,6 +25,6 @@ export interface CellContent {
     width?: string,
     fontSize?: string,
     fontWeight?: string,
-    selectedColumn?: boolean,
+    selectedColumn?: string,
     textAlign?: string
 }
