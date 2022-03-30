@@ -66,14 +66,14 @@ const Field = (props: FieldProps) => {
     if (fieldValue?.columns) {
       if (fieldValue.columns.length > 1) {
         fieldValue.columns.forEach((column: any) => {
-          column.selectedColumn = column.selectedColumn ? column.selectedColumn.toString() : "false"
+          column.selectedColumn = column.selectedColumn !== undefined ? column.selectedColumn.toString() : "false"
         })
         setColumns(fieldValue.columns);
       } else {
         setColumns(initColumns)
       }
     }
-    if (fieldValue?.isToBeMerged) {
+    if (fieldValue?.isToBeMerged !== undefined) {
       setIsToBeMerged(fieldValue.isToBeMerged.toString());
     } else {
       setIsToBeMerged("true")
