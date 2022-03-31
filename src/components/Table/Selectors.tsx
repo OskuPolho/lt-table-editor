@@ -83,12 +83,12 @@ const FontSizeSelector = (props:CellProps) => {
           setColumns(newCols);
         }}
       >
-        <Select.Option value="var(--font-size-x-small)">var(--font-size-x-small)</Select.Option>
-        <Select.Option value="var(--font-size-small)">var(--font-size-small)</Select.Option>
-        <Select.Option value="var(--font-size-medium)">var(--font-size-medium)</Select.Option>
-        <Select.Option value="var(--font-size-large)">var(--font-size-large)</Select.Option>
-        <Select.Option value="var(--font-size-x-large)">var(--font-size-x-large)</Select.Option>
-        <Select.Option value="var(--font-size-xx-large)">var(--font-size-xx-large)</Select.Option>
+        <Select.Option value="x-small)">x-small</Select.Option>
+        <Select.Option value="small)">small</Select.Option>
+        <Select.Option value="medium)">medium</Select.Option>
+        <Select.Option value="large)">large</Select.Option>
+        <Select.Option value="x-large)">x-large</Select.Option>
+        <Select.Option value="xx-large)">xx-large</Select.Option>
       </Select>
     </FormControl>
   )
@@ -109,9 +109,9 @@ const FontWeightSelector = (props:CellProps) => {
           setColumns(newCols);
         }}
       >
-        <Select.Option value="var(--font-weight-normal)">var(--font-weight-normal)</Select.Option>
-        <Select.Option value="var(--font-weight-semi-bold)">var(--font-weight-semi-bold)</Select.Option>
-        <Select.Option value="var(--font-weight-extra-bold)">var(--font-weight-extra-bold)</Select.Option>
+        <Select.Option value="normal">normal</Select.Option>
+        <Select.Option value="semi-bold">semi-bold</Select.Option>
+        <Select.Option value="extra-bold">extra-bold</Select.Option>
       </Select>
     </FormControl>
   )
