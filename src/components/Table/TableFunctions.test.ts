@@ -7,9 +7,10 @@ import {
     addNewColumn,
 
 } from './TableFunctions'
+import { CellContent } from './TableTypes';
 
-let initRows: any = [];
-let initColumns: any = [];
+let initRows: CellContent[][] = [];
+let initColumns: CellContent[] = [];
 
 beforeEach(() => {
   initRows = [

@@ -7,7 +7,7 @@ import {
 } from '@contentful/f36-components';
 
 import Table from './Table/Table'
-import {FieldProps} from './Table/TableTypes'
+import {CellContent, FieldProps} from './Table/TableTypes'
 import {
   changeCellValue,
   changeColValue,
@@ -45,10 +45,10 @@ const Field = (props: FieldProps) => {
   ]
 
   const initCollapsibleHeadingSize = props.sdk.entry.getSys().environment.sys.id === 'dev' ? 'large' : 'medium'
-
-  const [rows, setRows] = useState<any>(initRows)
-  const [columns, setColumns] = useState<any>(initColumns)
-  const [isToBeMerged, setIsToBeMerged] = useState<any>(false)
+  
+  const [rows, setRows] = useState<CellContent[][]>(initRows)
+  const [columns, setColumns] = useState<CellContent[]>(initColumns)
+  const [isToBeMerged, setIsToBeMerged] = useState<string>("false")
   const [collapsibleHeadingSize, setCollapsibleHeadingSize] = useState<string>(initCollapsibleHeadingSize)
   const [highlightedCol, setHighlightedCol] = useState<number>(-1)
   
@@ -65,7 +65,7 @@ const Field = (props: FieldProps) => {
     }
     if (fieldValue?.columns) {
       if (fieldValue.columns.length > 1) {
-        fieldValue.columns.forEach((column: any) => {
+        fieldValue.columns.forEach((column: CellContent) => {
           column.selectedColumn = column.selectedColumn !== undefined ? column.selectedColumn.toString() : "false"
         })
         setColumns(fieldValue.columns);

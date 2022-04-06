@@ -30,7 +30,7 @@
 
   export const addRow = (rows: CellContent[][]): CellContent[][] => {
     const newRows = [...rows]
-    const filledNewRow = rows[rows.length - 1].map((cell: any) => {return {...cell}})
+    const filledNewRow = rows[rows.length - 1].map((cell: CellContent) => {return {...cell}})
     newRows.push(filledNewRow);
     return newRows
   }

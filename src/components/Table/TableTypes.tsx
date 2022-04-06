@@ -7,7 +7,7 @@ export interface FieldProps {
   }
 
 export interface RowProps {
-    cells: any[],
+    cells: CellContent[],
     rowIndex?: number
 }
 
