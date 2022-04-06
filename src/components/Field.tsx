@@ -136,14 +136,9 @@ const Field = (props: FieldProps) => {
             value={collapsibleHeadingSize}
             onChange={(e) => setCollapsibleHeadingSize(e.target.value)}
           >
-            <Select.Option value="x-small">x-small</Select.Option>
-            <Select.Option value="small">small</Select.Option>
-            <Select.Option value="medium">medium</Select.Option>
-            <Select.Option value="large">large</Select.Option>
-            <Select.Option value="x-large">x-large</Select.Option>
-            <Select.Option value="xx-large">xx-large</Select.Option>
-            <Select.Option value="xxx-large">xxx-large</Select.Option>
-            <Select.Option value="xxxx-large">xxxx-large</Select.Option>
+            {collapsibleHeadingSizes.map(size => {
+              return <Select.Option value={size}>{size}</Select.Option>
+            })}
           </Select>
         </FormControl>
       </Flex>
@@ -153,3 +148,13 @@ const Field = (props: FieldProps) => {
 
 export default Field;
 
+const collapsibleHeadingSizes = [
+  "x-small",
+  "small",
+  "medium",
+  "large",
+  "x-large",
+  "xx-large",
+  "xxx-large",
+  "xxxx-large"
+]

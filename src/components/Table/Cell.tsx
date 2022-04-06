@@ -108,7 +108,14 @@ const IconCell = (props: CellProps) => {
           })}
         </Grid>
       }
-      <DuetIcon margin='none' name={text} onClick={() => {setIsOpen(!isOpen)}} style={{cursor: 'pointer'}}/>
+      <Flex fullHeight fullWidth justifyContent={'center'} alignItems={'center'}>
+          <Flex style={{height: '30%'}}>
+            {text === '' ?
+              <IconButton aria-label='open-icon-menu' icon={<icons.MenuIcon />} onClick={() => {setIsOpen(!isOpen)}}>Select Icon</IconButton>
+              :
+              <DuetIcon margin='none' name={text} onClick={() => {setIsOpen(!isOpen)}} style={{cursor: 'pointer'}}/>}
+          </Flex>
+      </Flex>
     </Flex>
   )
 }
