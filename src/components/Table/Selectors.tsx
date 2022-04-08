@@ -13,7 +13,6 @@ import * as icons from '@contentful/f36-icons';
 import { TableContext } from '../Field';
 import {CellProps} from './TableTypes'
 
-
 export const TypeSelector = (props: {rowIndex: number | undefined, cellIndex: number}) => {
   const {rowIndex, cellIndex} = props
   const {changeCellValue, rows, setRows} = useContext(TableContext)

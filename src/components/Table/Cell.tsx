@@ -12,6 +12,7 @@ import * as icons from '@contentful/f36-icons';
 import {TableContext} from '../Field';
 import {CellProps} from './TableTypes'
 import {TypeSelector, ColStyleMenu} from './Selectors'
+import duetIcons from "@duetds/icons"
 
 const Cell = (props: CellProps) => {
   const {cellIndex, rowIndex} = props
@@ -76,6 +77,8 @@ const IconCell = (props: CellProps) => {
   const {content, cellIndex, rowIndex} = props
   const {text} = content;
   const {changeCellValue, rows, columns, setRows} = useContext(TableContext);
+  const iconList: any = Object.values(duetIcons).map(value => value.title)
+
   return (
     <Flex flex={'1 1 0'} justifyContent={'center'}>
       {isOpen && 
@@ -109,8 +112,8 @@ const IconCell = (props: CellProps) => {
         </Grid>
       }
       <Flex fullHeight fullWidth justifyContent={'center'} alignItems={'center'}>
-          <Flex style={{height: '30%'}}>
-            {text === '' ?
+          <Flex>
+            {!iconList.includes(text) ?
               <IconButton aria-label='open-icon-menu' icon={<icons.MenuIcon />} onClick={() => {setIsOpen(!isOpen)}}>Select Icon</IconButton>
               :
               <DuetIcon margin='none' name={text} onClick={() => {setIsOpen(!isOpen)}} style={{cursor: 'pointer'}}/>}

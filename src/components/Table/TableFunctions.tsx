@@ -42,6 +42,7 @@
       row.push(newCol)
     })
     const newColumns = [...columns]
-    newColumns.push(newColumns[newColumns.length - 1])
+    const newColumn = {...columns[columns.length - 1]}
+    newColumns.push(newColumn)
     return {newRows, newColumns}
   }

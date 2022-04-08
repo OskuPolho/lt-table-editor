@@ -8,7 +8,7 @@
     "@contentful/forma-36-fcss": "^0.3.4",
     "@contentful/forma-36-react-components": "^3.100.4",
     "@contentful/forma-36-tokens": "^0.11.1",
-    "@duetds/icons": "^2.2.13",
+    "@duetds/icons": "^2.2.22",
     "@duetds/react": "^4.35.2",
     "@duetds/tokens": "^2.4.13",
     "contentful-management": "^7.49.0",

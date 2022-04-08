@@ -45,45 +45,13 @@ const Field = (props: FieldProps) => {
   ]
 
   const initCollapsibleHeadingSize = props.sdk.entry.getSys().environment.sys.id === 'dev' ? 'large' : 'medium'
+  const fieldValue = props.sdk.field.getValue();
   
-  const [rows, setRows] = useState<CellContent[][]>(initRows)
-  const [columns, setColumns] = useState<CellContent[]>(initColumns)
-  const [isToBeMerged, setIsToBeMerged] = useState<string>("false")
-  const [collapsibleHeadingSize, setCollapsibleHeadingSize] = useState<string>(initCollapsibleHeadingSize)
+  const [rows, setRows] = useState<CellContent[][]>(fieldValue?.rows || initRows)
+  const [columns, setColumns] = useState<CellContent[]>(fieldValue?.columns || initColumns)
+  const [isToBeMerged, setIsToBeMerged] = useState<string>(fieldValue?.isToBeMerged || "false")
+  const [collapsibleHeadingSize, setCollapsibleHeadingSize] = useState<string>(fieldValue?.collapsibleHeadingSize || initCollapsibleHeadingSize)
   const [highlightedCol, setHighlightedCol] = useState<number>(-1)
-  
-
-
-  useEffect(() => {
-    const fieldValue = props.sdk.field.getValue();
-    if (fieldValue?.rows) {
-      if (fieldValue.rows.length > 1) {
-        setRows(fieldValue.rows);
-      } else {
-        setRows(initRows);
-      }
-    }
-    if (fieldValue?.columns) {
-      if (fieldValue.columns.length > 1) {
-        fieldValue.columns.forEach((column: CellContent) => {
-          column.selectedColumn = column.selectedColumn !== undefined ? column.selectedColumn.toString() : "false"
-        })
-        setColumns(fieldValue.columns);
-      } else {
-        setColumns(initColumns)
-      }
-    }
-    if (fieldValue?.isToBeMerged !== undefined) {
-      setIsToBeMerged(fieldValue.isToBeMerged.toString());
-    } else {
-      setIsToBeMerged("true")
-    }
-    if (fieldValue?.collapsibleHeadingSize) {
-      setCollapsibleHeadingSize(fieldValue.collapsibleHeadingSize);
-    } else {
-      setCollapsibleHeadingSize(initCollapsibleHeadingSize)
-    }
-  }, [])
 
   useEffect(() => {
     if (columns.length < 1 || rows.length < 1) {
@@ -98,7 +66,7 @@ const Field = (props: FieldProps) => {
       collapsibleHeadingSize
     }
     props.sdk.field.setValue(newTable)
-      .then(res => console.log({res}))
+      .then(res => {console.log({res})})
   }, [rows, columns, isToBeMerged, collapsibleHeadingSize])
 
   return (
